@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Assignment1 {
+public class Test2 {
 	static final int MIN = 1;
 	static final int MAX = 100;
 	//if true, program repeats until quit
 	//currently disabled due reduce error
 	static boolean repeat = true;
+	static boolean error = false;
 	
 	//main
 	public static void main(String[] args){
@@ -19,42 +20,31 @@ public class Assignment1 {
 			String str1 = console.nextLine();
 			String[] strList = toStringList(str1);
 			if(strList.length>1){
-				if(isInteger(strList[0])){
-					int num = Integer.parseInt(strList[0]);
-					if(num<MIN || num>MAX){
-						System.out.println("error: First input number less than 1 or greater than 100.");
-					}
-					else if(isInteger(strList[1])){
-						int num2 = Integer.parseInt(strList[1]);
-						if(num2>=MIN && num2<=MAX){
-							ArrayList<Integer> nums = new ArrayList<Integer>();
-							nums.add(num);
-							nums.add(num2);
-							System.out.println(cgf(nums));
+				ArrayList<Integer> intList = new ArrayList<Integer>(0);
+				for(int a = 0; a<strList.length; a++){
+					if(isInteger(strList[a])){
+						if(Integer.parseInt(strList[a])<MIN || Integer.parseInt(strList[a])>MAX){
+							System.out.println("error: " + (a+1) + " input less than 1 or greater than 100");
+							error = true;
 						}
 						else{
-							System.out.println("error: Second input number less than 1 or greater than 100.");
+							intList.add(Integer.parseInt(strList[a]));
 						}
 					}
 					else{
-						String str = strList[1];
-						if(checkInput(str)){
-							System.out.println("error: Second input not an int");
+						if(checkInput(strList[a])){
+							System.out.println("error: " + (a+1) + " input not an int");
+							error = true;
 						}
 						else{
 							repeat = false;
 						}
 					}
 				}
-				else{
-					String str = strList[0];
-					if(checkInput(str)){
-						System.out.println("error: First input not an int");
-					}
-					else{
-						repeat = false;
-					}
+				if(!error){
+					cgf(intList);
 				}
+				error = false;
 			}
 			//second part
 			else if(isInteger(strList[0])){
@@ -124,21 +114,30 @@ public class Assignment1 {
 		return factors;
 	}
 	
-	public static int cgf(ArrayList<Integer> list){
-		int cgf = 0;
-		int num1 = list.get(0);
-		int num2 = list.get(1);
-		int[] factors1 = factor(num1);
-		int[] factors2 = factor(num2);
-		for(int x = factors2.length-1; x>-1; x--){
-			for(int y = 0; y<factors1.length; y++){
-				if(factors2[x] == factors1[y]){
-					cgf = factors1[y];
-					return cgf;
+	public static void cgf(ArrayList<Integer> list){
+		ArrayList<int[]> fList = new ArrayList<int[]>(0);
+		int common = 0;
+		int cFactor = 0;
+		for(int x=0; x<list.size(); x++){
+			fList.add(factor(list.get(x)));
+		}
+		for(int a=fList.get(0).length-1; a>-1; a--){
+			cFactor = fList.get(0)[a];
+			for(int b=1; b<fList.size(); b++){
+				for(int c=fList.get(b).length-1; c>-1; c--){
+					if(fList.get(0)[a] == fList.get(b)[c]){
+						common++;
+					}
 				}
 			}
+			if(common == fList.size()-1){
+				System.out.println(cFactor);
+				return;
+			}
+			else{
+				common = 0;
+			}
 		}
-		return cgf;
 	}
 	
 	//prints int[] 

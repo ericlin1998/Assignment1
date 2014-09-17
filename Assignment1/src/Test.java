@@ -86,12 +86,13 @@ public class Test {
 							common++;
 						}
 					}
-					if(common == fList.size()-1){
-						System.out.println(cFactor);
-					}
-					else{
-						common = 0;
-					}
+				}
+				if(common == fList.size()-1){
+					System.out.println(cFactor);
+					return;
+				}
+				else{
+					common = 0;
 				}
 			}
 		}
