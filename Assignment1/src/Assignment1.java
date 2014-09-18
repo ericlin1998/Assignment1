@@ -64,7 +64,8 @@ public class Assignment1 {
 				}
 				else{
 					int[] list = factor(num);
-					toString(list);
+					System.out.println(toString(list));
+					
 				}
 			}
 			else{
@@ -142,12 +143,13 @@ public class Assignment1 {
 	}
 	
 	//prints int[] 
-	public static void toString(int[] list){
-		System.out.print("[" + list[0]);
+	public static String toString(int[] list){
+		String str = "[" + list[0];
 		for(int x=1; x<list.length; x++){
-			System.out.print(", " + list[x]);
+			str = str + ", " + list[x];
 		}
-		System.out.println("]");
+		str = str +"]";
+		return str;
 	}
 	
 	public static boolean isInteger( String input ) {
