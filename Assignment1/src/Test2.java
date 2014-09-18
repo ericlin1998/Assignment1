@@ -42,7 +42,7 @@ public class Test2 {
 					}
 				}
 				if(!error){
-					cgf(intList);
+					System.out.println(cgf(intList));
 				}
 				error = false;
 			}
@@ -54,7 +54,7 @@ public class Test2 {
 				}
 				else{
 					int[] list = factor(num);
-					toString(list);
+					System.out.println(toString(list));
 				}
 			}
 			else{
@@ -114,7 +114,7 @@ public class Test2 {
 		return factors;
 	}
 	
-	public static void cgf(ArrayList<Integer> list){
+	public static int cgf(ArrayList<Integer> list){
 		ArrayList<int[]> fList = new ArrayList<int[]>(0);
 		int common = 0;
 		int cFactor = 0;
@@ -131,22 +131,23 @@ public class Test2 {
 				}
 			}
 			if(common == fList.size()-1){
-				System.out.println(cFactor);
-				return;
+				return cFactor;
 			}
 			else{
 				common = 0;
 			}
 		}
+		return cFactor;
 	}
 	
 	//prints int[] 
-	public static void toString(int[] list){
-		System.out.print("[" + list[0]);
+	public static String toString(int[] list){
+		String str = "[" + list[0];
 		for(int x=1; x<list.length; x++){
-			System.out.print(", " + list[x]);
+			str = str + ", " + list[x];
 		}
-		System.out.println("]");
+		str = str +"]";
+		return str;
 	}
 	
 	public static boolean isInteger( String input ) {
